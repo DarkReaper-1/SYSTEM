@@ -1,0 +1,74 @@
+# SYSTEM V1 — CreditPolicy V1.0
+
+**Status:** LOCKED DESIGN  
+**Version:** 1.0  
+**Scope:** SYSTEM V1 training-credit economy  
+**Authority:** This document is the authoritative source for V1 CreditPolicy numerics and credit-policy behavior.
+
+This document supplies the numeric and functional policy values required by:
+
+- `docs/system-training-contract-v1.md`
+- `docs/SYSTEM_MASTER_SPEC.md`
+- `docs/system-adversarial-attacks-v1.md`
+
+It does not define the ExerciseCatalog.
+
+It does not define XP formulas, Level thresholds, Rank predicates, achievements, PR formulas, or quest formulas.
+
+---
+
+# 1. Policy Principles
+
+SYSTEM V1 follows these economic principles:
+
+1. Training history is not automatically credit.
+2. Credit is derived by the server evaluator.
+3. The client cannot choose credit.
+4. There is no writable XP balance.
+5. There is no session-completion XP.
+6. There is no achievement XP.
+7. There is no PR XP.
+8. `FAILED` sets receive `ZERO` credit in V1.
+9. `PENDING` is economically inert.
+10. Imported history cannot become official V1 capability evidence.
+11. Manual credit is limited and cannot independently establish Rank.
+12. Re-evaluation never creates net-positive credit merely because evaluator or policy metadata changed.
+13. Credit is bounded by time, policy, provenance, and training-record identity.
+14. All economic calculations use server-owned timestamps.
+
+---
+
+# 2. Canonical Credit Unit
+
+The V1 ledger uses an abstract integer credit unit:
+
+**CU = Credit Unit**
+
+`CreditLedgerEntry.amount` is stored as an integer number of CU.
+
+CU is an internal economic unit. It is not kilograms, calories, minutes, reps, or any physical measurement.
+
+Physical training measurements remain canonical measurements defined by the Training Contract.
+
+Credit-producing evaluator logic converts eligible training stimulus into CU according to the applicable policy.
+
+## 2.1 Ledger amount
+
+- Type: integer
+- Minimum: `0`
+- Maximum per ledger entry: `100 CU`
+- Negative ledger entries are not permitted.
+- Economic reversal uses `COMPENSATION`, not a negative amount.
+- A compensation amount may offset a previous grant but may not itself create positive net credit.
+
+---
+
+# 3. Policy Identity
+
+Every accepted training record is pinned to exactly one CreditPolicy version.
+
+V1:
+
+```text
+policy_id = CREDIT_POLICY_V1
+version = 1.0
